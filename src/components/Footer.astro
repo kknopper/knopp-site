@@ -1,0 +1,316 @@
+---
+import { Icon } from 'astro-icon/components';
+import NavLinks from './NavLinks.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer role="contentinfo" class="footer theme-color-bg">
+  <div class="footer-logo-wrap">
+    <div class="footer-text-bubble theme-color-bg-secondary" id="footer-text-bubble" aria-live="polite"></div>
+    <div class="footer-logo theme-color-bg" id="footer-logo" role="button" tabindex="0" aria-label="Click me!"></div>
+  </div>
+  <nav class="footer-container">
+    <ul class="footer-share">
+      <li><a href="https://dribbble.com/kknopper/" target="_blank" rel="noopener" aria-label="Dribbble"><Icon name="fa6-brands:dribbble" width={18} height={18} /></a></li>
+      <li><a href="https://github.com/kknopper/" target="_blank" rel="noopener" aria-label="GitHub"><Icon name="fa6-brands:github" width={18} height={18} /></a></li>
+      <li><a href="https://www.linkedin.com/in/kknopper/" target="_blank" rel="noopener" aria-label="LinkedIn"><Icon name="fa6-brands:linkedin" width={18} height={18} /></a></li>
+      <li><a href="https://www.facebook.com/kknopper/" target="_blank" rel="noopener" aria-label="Facebook"><Icon name="fa6-brands:facebook" width={18} height={18} /></a></li>
+      <li><a href="https://www.instagram.com/kknopper/" target="_blank" rel="noopener" aria-label="Instagram"><Icon name="fa6-brands:instagram" width={18} height={18} /></a></li>
+      <li><a href="mailto:kknopper@gmail.com" aria-label="Email"><Icon name="fa6-solid:envelope" width={18} height={18} /></a></li>
+      <li>
+        <button class="footer-search-btn" data-search-open aria-label="Search">
+          <Icon name="fa6-solid:magnifying-glass" width={18} height={18} />
+        </button>
+      </li>
+    </ul>
+    <ul class="footer-links">
+      <NavLinks />
+    </ul>
+  </nav>
+  <div class="footer-legal">&copy; Kevin Knopp {year}</div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    margin-top: 65px;
+    color: white;
+
+    a {
+      color: white;
+      font-family: var(--font-primary);
+      letter-spacing: 1px;
+      line-height: 30px;
+    }
+  }
+
+  .footer-container {
+    display: block;
+    width: var(--container-width);
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+
+    @media (min-width: 60em) {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .footer-share {
+    display: block;
+    padding-top: 65px;
+    text-align: center;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    @media (min-width: 60em) {
+      padding: 0;
+    }
+  }
+
+  .footer-links {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+  }
+
+  .footer-share,
+  .footer-links {
+    width: auto;
+    vertical-align: top;
+
+    @media (min-width: 60em) {
+      margin-top: 20px;
+      display: inline-flex;
+      padding: 10px 0;
+    }
+  }
+
+  .footer-share a :global(svg),
+  .footer-search-btn :global(svg) {
+    fill: white;
+    vertical-align: middle;
+  }
+
+  .footer-search-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .footer-share li,
+  .footer-links li {
+    display: inline-block;
+    list-style-type: none;
+    padding: 10px 7px;
+
+    @media (min-width: 40em) {
+      padding: 0 15px;
+    }
+  }
+
+  .footer-legal {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  /* Mii avatar logo in footer */
+  .footer-logo-wrap {
+    width: 108px;
+    height: 108px;
+    background-image: url('/images/halftone.png');
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .footer-logo {
+    display: block;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    overflow: hidden;
+    background-image: url('/images/mii.png');
+    background-size: 100px;
+    background-position: 60% 5px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+
+    &:hover {
+      background-position: 60% -120px;
+    }
+  }
+
+  /* Holiday mii variants */
+  :global(html.thanksgiving) .footer-logo {
+    background-image: url('/images/mii-thanksgiving.png');
+    background-position: 1px 5px;
+
+    &:hover {
+      background-position: 1px -120px;
+    }
+  }
+
+  :global(html.st-pattys) .footer-logo {
+    background-image: url('/images/mii-st-pattys.png');
+    background-position: 0 5px;
+
+    &:hover {
+      background-position: 0 -120px;
+    }
+  }
+
+  :global(html.cinco-de-mayo) .footer-logo {
+    background-image: url('/images/mii-cinco-de-mayo.png');
+    background-position: 0 5px;
+
+    &:hover {
+      background-position: 0 -120px;
+    }
+  }
+
+  :global(html.easter) .footer-logo {
+    background-image: url('/images/mii-easter.png');
+    background-position: 0 5px;
+
+    &:hover {
+      background-position: 0 -120px;
+    }
+  }
+
+  :global(html.halloween) .footer-logo {
+    background-image: url('/images/mii-halloween.png');
+    background-position: 0 5px;
+
+    &:hover {
+      background-position: 0 -120px;
+    }
+  }
+
+  /* Speech bubble */
+  .footer-text-bubble {
+    position: absolute;
+    width: 250px;
+    min-height: 45px;
+    padding: 10px;
+    border-radius: 7px;
+    border: 3px solid white;
+    left: 50%;
+    bottom: 120px;
+    z-index: 2;
+    transform: translateX(-51%);
+    opacity: 0;
+    transition: opacity 0.3s, bottom 0.3s;
+    pointer-events: none;
+    color: white;
+    text-align: center;
+    font-family: var(--font-primary);
+    font-size: 0.875rem;
+
+    &.active {
+      opacity: 1;
+      bottom: 130px;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      border-style: solid;
+      border-width: 15px 15px 0;
+      border-color: white transparent;
+      display: block;
+      width: 0;
+      z-index: 1;
+      bottom: -15px;
+      left: 110px;
+    }
+  }
+</style>
+
+<script>
+  const phraseMap: Record<string, string[]> = {
+    'cinco-de-mayo': ['Happy Cinco De Mayo!!', 'Yo Quiero Taco Bell!'],
+    easter: ['Happy Easter!', 'He is risen!'],
+    thanksgiving: ['Happy Thanksgiving!', 'Gobble Gobble!', "It's Turkey Time!", "I'm Stuffed!"],
+    christmas: ['Merry Christmas!', 'A child is born!'],
+    'st-pattys': ["Happy St. Patrick's Day!", 'Feeling Lucky?', "Don't Pinch Me!", "They're after me lucky charms!", 'Cheers!'],
+  };
+
+  const defaultPhrases = [
+    'Hi there!', 'That tickles!', "What's up?", 'The cake is a lie.', 'I know kung fu',
+    'Life is like a box of chocolates', 'Wax on, Wax off.', 'Elementary, my dear Watson.',
+    "That'll do pig, that'll do.", 'Say hello to my little friend', 'Why so serious?',
+    'As you wish', 'Are you not entertained?', 'Click me again',
+    'The names Knopp. Kevin Knopp.', "There's no place like home", 'May the force be with you',
+    'Great Scott!', "Where we're going, we don't need roads.", "The princess is in another castle!",
+    "Gotta catch 'em all!",
+  ];
+
+  let lastIndex = -1;
+  let lastFired = 0;
+  const THROTTLE_MS = 2100;
+
+  function getNextPhrase(phrases: string[]): string {
+    let idx: number;
+    do { idx = Math.floor(Math.random() * phrases.length); }
+    while (phrases.length > 1 && idx === lastIndex);
+    lastIndex = idx;
+    return phrases[idx];
+  }
+
+  function init() {
+    const logo = document.getElementById('footer-logo');
+    const bubble = document.getElementById('footer-text-bubble');
+    if (!logo || !bubble) return;
+
+    const holiday = document.documentElement.className;
+    const phrases = phraseMap[holiday] ?? defaultPhrases;
+
+    function showPhrase(text: string) {
+      bubble.textContent = text;
+      bubble.classList.add('active');
+      clearTimeout((bubble as any)._hideTimer);
+      (bubble as any)._hideTimer = setTimeout(() => {
+        bubble.classList.remove('active');
+      }, 2500);
+    }
+
+    logo.addEventListener('click', () => {
+      const now = Date.now();
+      if (now - lastFired < THROTTLE_MS) return;
+      lastFired = now;
+      showPhrase(getNextPhrase(phrases));
+    });
+
+    logo.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        logo.click();
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

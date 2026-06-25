@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PortfolioPiece from '../../components/PortfolioPiece.astro';
+
+const items = (await getCollection('portfolio')).sort(
+  (a, b) => (a.data.date?.valueOf() ?? 0) - (b.data.date?.valueOf() ?? 0)
+);
+---
+
+<BaseLayout title="Portfolio" description="Selected work in design and development" heroH1="Portfolio" heroH2="A small showcase of some of my work
+">
+  <section class="portfolio container">
+    <ul class="portfolio-tag-list" id="portfolio-filters">
+      <li><button data-filter="all" class="tag theme-color-bg active-filter">All</button></li>
+      <li><button data-filter="dev" class="tag theme-color-bg">Development</button></li>
+      <li><button data-filter="des" class="tag theme-color-bg">Design</button></li>
+    </ul>
+
+    <ul class="portfolio-grid" id="portfolio-grid">
+      {items.map((item) => (
+        <PortfolioPiece
+          href={`/portfolio/${item.id}`}
+          thumb={item.data.thumb}
+          thumbAlt={item.data.thumbAlt ?? item.data.title}
+          filter={item.data.filter}
+          class="grid-dynamic"
+        />
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .portfolio {
+    display: block;
+    padding-bottom: 3rem;
+  }
+
+  .portfolio-tag-list {
+    text-align: center;
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: inline-block;
+      text-align: center;
+    }
+
+    .tag {
+      width: 125px;
+      font-size: 0.5625rem;
+      border: none;
+      cursor: pointer;
+
+      @media (min-width: 30em) {
+        width: 150px;
+        font-size: 0.75rem;
+      }
+
+      &.active-filter {
+        opacity: 0.7;
+        outline: 2px solid white;
+        outline-offset: 2px;
+      }
+    }
+  }
+
+  .portfolio-grid {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    :global(.portfolio-piece) {
+      margin-bottom: 2.8%;
+      float: left;
+      padding-left: var(--grid-margins);
+      padding-right: var(--grid-margins);
+    }
+  }
+</style>
+
+<script>
+  function init() {
+    const filters = document.querySelectorAll<HTMLButtonElement>('#portfolio-filters [data-filter]');
+    const pieces = document.querySelectorAll<HTMLElement>('.portfolio-piece');
+
+    if (!filters.length || !pieces.length) return;
+
+    filters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filters.forEach((b) => b.classList.remove('active-filter'));
+        btn.classList.add('active-filter');
+        const filter = btn.dataset.filter ?? 'all';
+        pieces.forEach((piece) => {
+          const tags = (piece.dataset.filter ?? '').split(' ');
+          if (filter === 'all' || tags.includes(filter)) {
+            piece.classList.remove('hidden');
+          } else {
+            piece.classList.add('hidden');
+          }
+        });
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

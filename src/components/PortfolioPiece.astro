@@ -1,0 +1,139 @@
+---
+interface Props {
+  href: string;
+  thumb: string;
+  thumbAlt: string;
+  filter?: string[];
+  class?: string;
+}
+
+const { href, thumb, thumbAlt, filter, class: className } = Astro.props;
+---
+
+<li class:list={["portfolio-piece", className]} data-filter={filter?.join(' ')} data-href={href}>
+  <a href={href} class="portfolio-piece-wrap theme-color-bg-secondary">
+    <img src={thumb} alt={thumbAlt} />
+  </a>
+</li>
+
+<style>
+  .portfolio-piece {
+    list-style-type: none;
+    position: relative;
+    cursor: pointer;
+
+    &.hidden {
+      display: none;
+    }
+
+    &:hover .portfolio-piece-wrap {
+      opacity: 0.85;
+    }
+
+    &::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 999;
+      width: 0;
+      height: 0;
+      left: var(--circle-x, 50%);
+      top: var(--circle-y, 50%);
+      transform: translate(-50%, -50%);
+      background-color: var(--theme-color-secondary);
+    }
+  }
+
+  .portfolio-piece-wrap {
+    display: block;
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    transition: opacity 0.2s;
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%;
+    }
+  }
+
+  .portfolio-piece.animating img {
+    animation: piece-fade-logo 150ms linear forwards;
+  }
+
+  .portfolio-piece.animating .portfolio-piece-wrap {
+    animation: piece-shrink-wrap 250ms ease-out 150ms forwards;
+  }
+
+  .portfolio-piece.animating::after {
+    animation: piece-expand-circle 350ms cubic-bezier(0.33, 1, 0.68, 1) 400ms forwards;
+  }
+
+  @keyframes piece-fade-logo {
+    to { opacity: 0; }
+  }
+
+  @keyframes piece-shrink-wrap {
+    to { border-radius: 50%; scale: 0.45; }
+  }
+
+  @keyframes piece-expand-circle {
+    to { width: 300vmax; height: 300vmax; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portfolio-piece.animating img,
+    .portfolio-piece.animating .portfolio-piece-wrap,
+    .portfolio-piece.animating::after {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+
+  function init() {
+    const pieces = document.querySelectorAll<HTMLElement>('.portfolio-piece');
+
+    // Reset from back navigation
+    pieces.forEach((piece) => {
+      piece.classList.remove('animating');
+      piece.style.removeProperty('--circle-x');
+      piece.style.removeProperty('--circle-y');
+    });
+
+    pieces.forEach((piece) => {
+      piece.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = piece.dataset.href;
+        if (!href) return;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          navigate(href);
+          return;
+        }
+
+        const wrap = piece.querySelector<HTMLElement>('.portfolio-piece-wrap');
+        if (!wrap) return;
+        const rect = wrap.getBoundingClientRect();
+        piece.style.setProperty('--circle-x', `${rect.left + rect.width / 2}px`);
+        piece.style.setProperty('--circle-y', `${rect.top + rect.height / 2}px`);
+
+        piece.classList.add('animating');
+
+        piece.addEventListener('animationend', (ae: AnimationEvent) => {
+          if (ae.pseudoElement === '::after') {
+            navigate(href);
+          }
+        });
+      });
+    });
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

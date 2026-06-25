@@ -1,21 +1,120 @@
 ---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogPostItem from '../components/BlogPostItem.astro';
+import PortfolioPiece from '../components/PortfolioPiece.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const portfolioItems = (await getCollection('portfolio'))
+  .sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0))
+  .slice(0, 4);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<nav>
-			<a href="/">Home</a>
-			<a href="/about/">About</a>
-			<a href="/blog/">Blog</a>
-		</nav>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title={SITE_TITLE}
+  description={SITE_DESCRIPTION}
+  heroH1="I'm Kevin Knopp"
+  heroH2=`I like to <span class="des-text theme-color">design</span> &amp; <span class="dev-text theme-color">develop</span> awesome websites`
+>
+  <section class="home-page container">
+    <div class="row">
+      <div class="about grid-half">
+        <h3 class="theme-color">About</h3>
+        <hr class="theme-color-bg-secondary" />
+        <p>I'm a front-end web developer currently living in Austin, TX. There's a warm place in my heart for simple design, clean code, and all things orange. When I'm not designing or developing, I enjoy browsing the interwebs, expanding my movie collection, or playing a good game of <a href="https://www.chess.com/play/online/new?opponent=knopptimus">chess</a>.</p>
+      </div>
+      <div class="craft grid-half">
+        <h3 class="theme-color">Craft</h3>
+        <hr class="theme-color-bg-secondary" />
+        <p>I currently work for <a href="http://www.level-studios.com/">Level Studios</a>, an awesome agency with a focus on customer engagement. Agency life is fast-paced and exciting, and there's always a new project right around the corner. As a Creative Engineer, I've been able to develop websites and webapps for some of the biggest brands out there, including Timberland, Folgers, and Samsung.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="grid-full">
+        <h3 class="theme-color">Recent Work</h3>
+      </div>
+      <ul class="portfolio-grid grid-full">
+        {portfolioItems.map((item) => (
+          <PortfolioPiece
+            href={`/portfolio/${item.id}`}
+            thumb={item.data.thumb}
+            thumbAlt={item.data.thumbAlt ?? item.data.title}
+          />
+        ))}
+      </ul>
+      <div class="grid-full portfolio-link-wrap">
+        <a href="/portfolio" class="theme-color">View all work &rarr;</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="grid-full">
+        <h3 class="theme-color">Recent Posts</h3>
+      </div>
+      <div class="blog-container grid-full">
+        {posts.map((post) => (
+          <BlogPostItem post={post} showTags={false} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .home-page {
+    padding-bottom: 3rem;
+
+    h3 {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .portfolio-grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+    @media (min-width: 40em) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .portfolio-link-wrap {
+    margin-top: 1rem;
+
+    a {
+      text-decoration: underline;
+      transition: opacity 0.3s;
+
+      &:hover {
+        opacity: 0.75;
+      }
+    }
+  }
+
+  .about,
+  .craft {
+    margin-bottom: 1.5rem;
+
+    hr {
+      border: none;
+      height: 2px;
+      margin: 0.5rem 0 1rem;
+    }
+
+    p {
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+</style>

@@ -1,0 +1,560 @@
+/* =============================================================
+   FONTS
+   ============================================================= */
+
+@font-face {
+  font-family: 'League Spartan';
+  src: url('/fonts/LeagueSpartan-Bold.eot');
+  src: url('/fonts/LeagueSpartan-Bold.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/LeagueSpartan-Bold.woff2') format('woff2'),
+       url('/fonts/LeagueSpartan-Bold.woff') format('woff'),
+       url('/fonts/LeagueSpartan-Bold.ttf') format('truetype'),
+       url('/fonts/LeagueSpartan-Bold.svg#LeagueSpartan-Bold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Thin.woff2') format('woff2'),
+       url('/fonts/Montserrat-Thin.woff') format('woff'),
+       url('/fonts/Montserrat-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-ExtraLight.woff2') format('woff2'),
+       url('/fonts/Montserrat-ExtraLight.woff') format('woff'),
+       url('/fonts/Montserrat-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Light.woff2') format('woff2'),
+       url('/fonts/Montserrat-Light.woff') format('woff'),
+       url('/fonts/Montserrat-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Regular.woff2') format('woff2'),
+       url('/fonts/Montserrat-Regular.woff') format('woff'),
+       url('/fonts/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Medium.woff2') format('woff2'),
+       url('/fonts/Montserrat-Medium.woff') format('woff'),
+       url('/fonts/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-SemiBold.woff2') format('woff2'),
+       url('/fonts/Montserrat-SemiBold.woff') format('woff'),
+       url('/fonts/Montserrat-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Bold.woff2') format('woff2'),
+       url('/fonts/Montserrat-Bold.woff') format('woff'),
+       url('/fonts/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-ExtraBold.woff2') format('woff2'),
+       url('/fonts/Montserrat-ExtraBold.woff') format('woff'),
+       url('/fonts/Montserrat-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Black.woff2') format('woff2'),
+       url('/fonts/Montserrat-Black.woff') format('woff'),
+       url('/fonts/Montserrat-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  src: url('/fonts/Pacifico.eot');
+  src: url('/fonts/Pacifico.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/Pacifico.woff2') format('woff2'),
+       url('/fonts/Pacifico.woff') format('woff'),
+       url('/fonts/Pacifico.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  src: url('/fonts/CourierPrime.woff2') format('woff2'),
+       url('/fonts/CourierPrime.woff') format('woff'),
+       url('/fonts/CourierPrime.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  src: url('/fonts/CourierPrime-Bold.woff2') format('woff2'),
+       url('/fonts/CourierPrime-Bold.woff') format('woff'),
+       url('/fonts/CourierPrime-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  src: url('/fonts/CourierPrime-Italic.woff2') format('woff2'),
+       url('/fonts/CourierPrime-Italic.woff') format('woff'),
+       url('/fonts/CourierPrime-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  src: url('/fonts/CourierPrime-BoldItalic.woff2') format('woff2'),
+       url('/fonts/CourierPrime-BoldItalic.woff') format('woff'),
+       url('/fonts/CourierPrime-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* =============================================================
+   DESIGN TOKENS (CSS CUSTOM PROPERTIES)
+   ============================================================= */
+
+:root {
+  /* --- Colors --- */
+  --color-primary: #F06925;
+  --color-secondary: #477998;
+  --color-tertiary: #72B542;
+  --color-black: #272727;
+  --color-white: #ffffff;
+  --color-gray-dark: #808080;
+  --color-gray-light: #e5e5e5;
+
+  /* Status */
+  --color-info: #0088cc;
+  --color-success: #377f31;
+  --color-danger: #880e14;
+  --color-warning: #dba909;
+
+  /* Konami easter egg colors */
+  --konami-primary: #72B542;
+  --konami-secondary: #F06925;
+
+  /* --- Theme aliases (change these per holiday/konami) --- */
+  --theme-color: var(--color-primary);
+  --theme-color-secondary: var(--color-secondary);
+  --theme-color-tertiary: var(--color-tertiary);
+
+  /* --- Typography --- */
+  --font-primary: 'Montserrat', Arial, sans-serif;
+  --font-heading: 'League Spartan', Arial, sans-serif;
+  --font-decorative: 'Pacifico', cursive;
+  --font-mono: 'Courier Prime', Menlo, Monaco, 'Courier New', monospace;
+
+  /* --- Breakpoints (reference only — use in media queries directly) ---
+     mobile:       30em   (480px)
+     tablet:       40em   (640px)
+     desktop:      60em   (960px)
+     xl-desktop:   80em   (1280px)
+     xxl-desktop:  100em  (1600px)
+     xxxl-desktop: 125em  (2000px)
+  */
+
+  /* --- Layout --- */
+  --container-width: 88%;
+  --container-max-width: 80em;
+  --grid-margins: 1.4%;
+  --spacing: 1.5625em;
+
+  /* --- Transitions --- */
+  --transition-theme: color 2s ease-in-out, background-color 2s ease-in-out, fill 2s ease-in-out, border-color 2s ease-in-out;
+}
+
+/* Konami code override */
+html.konami {
+  --theme-color: var(--konami-primary);
+  --theme-color-secondary: var(--konami-secondary);
+}
+
+
+/* =============================================================
+   THEME UTILITY CLASSES
+   ============================================================= */
+
+.theme-color           { color: var(--theme-color); }
+.theme-color-secondary { color: var(--theme-color-secondary); }
+.theme-color-tertiary  { color: var(--theme-color-tertiary); }
+
+.theme-color-bg {
+  background-color: var(--theme-color);
+  fill: var(--theme-color);
+}
+
+.theme-color-bg-secondary {
+  background-color: var(--theme-color-secondary);
+  fill: var(--theme-color-secondary);
+}
+
+.theme-color-bg-tertiary {
+  background-color: var(--theme-color-tertiary);
+  fill: var(--theme-color-tertiary);
+}
+
+.theme-color-border           { border: 5px solid var(--theme-color); }
+.theme-color-border-secondary { border: 5px solid var(--theme-color-secondary); }
+
+/* Transition variants (added via JS during konami/theme change) */
+.theme-color.transition           { transition: var(--transition-theme); }
+.theme-color-bg.transition        { transition: var(--transition-theme); }
+.theme-color-bg-secondary.transition { transition: var(--transition-theme); }
+.theme-color-border.transition    { transition: var(--transition-theme); }
+
+
+/* =============================================================
+   BASE RESET & GLOBAL STYLES
+   ============================================================= */
+
+html {
+  font-size: 100%;
+  line-height: 1.5625;
+}
+
+html.noscroll {
+  overflow: hidden;
+}
+
+body {
+  padding: 0;
+  font-family: var(--font-primary);
+  font-weight: 300;
+  color: var(--color-black);
+  background-image: url('/images/halftone.png');
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  position: relative;
+  flex-grow: 1;
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: 2.5em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+
+h2 {
+  font-family: var(--font-primary);
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: 2.25em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+h3 a {
+  font-weight: normal;
+}
+
+h4 {
+  font-family: var(--font-heading);
+  font-size: 1.25em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+h5, h6 {
+  font-family: var(--font-primary);
+  margin: 0 0 0.5rem;
+}
+
+p, ul, li {
+  font-family: var(--font-primary);
+  font-weight: 300;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+article p {
+  font-weight: 300;
+}
+
+a {
+  font-weight: 400;
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+a:hover,
+a:active,
+a:focus {
+  text-decoration: none;
+}
+
+hr {
+  height: 3px;
+  margin: 0 0 1.25rem;
+  border: none;
+  background-color: var(--color-gray-light);
+}
+
+img {
+  height: auto;
+}
+
+/* Icon antialiasing */
+.fa, .fas, .far, .fab {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+svg {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  shape-rendering: geometricPrecision;
+}
+
+code {
+  font-family: var(--font-mono);
+  padding: 2px 5px;
+  background-color: var(--color-gray-light);
+  border-radius: 2px;
+}
+
+pre {
+  padding: 1.5em;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+pre > code {
+  all: unset;
+  font-family: var(--font-mono);
+}
+
+blockquote {
+  border-left: 4px solid var(--theme-color);
+  padding: 0 0 0 1.25em;
+  margin: 0;
+  font-size: 1.333em;
+}
+
+/* Section padding */
+main section:first-child {
+  padding-top: 3.125rem;
+}
+
+@media (min-width: 40em) {
+  main section:first-child {
+    padding-top: 3.125rem;
+  }
+}
+
+main section.blog-article-container:first-child,
+main section.blog-search-container:first-child {
+  padding-top: 4.6875rem;
+}
+
+@media (min-width: 40em) {
+  main section.blog-article-container:first-child,
+  main section.blog-search-container:first-child {
+    padding-top: 6.25rem;
+  }
+}
+
+/* Accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+
+/* =============================================================
+   LAYOUT — CONTAINER & GRID
+   ============================================================= */
+
+.container {
+  width: var(--container-width);
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.row {
+  margin-left: calc(-1 * var(--grid-margins));
+  margin-right: calc(-1 * var(--grid-margins));
+}
+
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Base: full width (mobile-first) */
+[class*="grid-"] {
+  float: left;
+  width: 100%;
+  padding-left: var(--grid-margins);
+  padding-right: var(--grid-margins);
+}
+
+/* Grid activates at 640px+ */
+@media (min-width: 40em) {
+  .grid-full        { width: 100%; }
+  .grid-three-fourths { width: 75%; }
+  .grid-two-thirds  { width: 66.6667%; }
+  .grid-half        { width: 50%; }
+  .grid-third       { width: 33.3333%; }
+  .grid-fourth      { width: 25%; }
+}
+
+/* Dynamic grid (responsive sizes) */
+.grid-dynamic { width: 100%; }
+
+@media (min-width: 20em) {
+  .grid-dynamic { width: 50%; }
+}
+
+@media (min-width: 35em) {
+  .grid-dynamic { width: 33.3333%; }
+}
+
+@media (min-width: 45em) {
+  .grid-dynamic { width: 25%; }
+}
+
+/* Small-start row variants */
+@media (min-width: 20em) {
+  .row-start-xsmall [class*="grid-"] { float: left; }
+}
+
+@media (min-width: 30em) {
+  .row-start-small [class*="grid-"] { float: left; }
+}
+
+
+/* =============================================================
+   BUTTON BASE
+   ============================================================= */
+
+.button,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  display: inline-block;
+  font-family: var(--font-primary);
+  font-size: 0.875em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 0.25em;
+  padding: 0.5em 1.25em;
+  cursor: pointer;
+  border: none;
+  color: var(--color-white);
+  background-color: var(--theme-color);
+  text-decoration: none;
+  transition: opacity 0.2s;
+  margin: 0 0.3em;
+}
+
+.button:hover,
+button:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.button.theme-color-bg-secondary {
+  background-color: var(--theme-color-secondary);
+}
+
+
+/* =============================================================
+   TAG BADGE
+   ============================================================= */
+
+.tag {
+  display: inline-block;
+  text-align: center;
+  font-size: 0.5625rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-white);
+  padding: 0.4em 0.75em;
+  border-radius: 0.25em;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.tag:hover {
+  opacity: 0.85;
+  text-decoration: none;
+  color: var(--color-white);
+}
+
+.tag i {
+  margin-right: 0.25em;
+}

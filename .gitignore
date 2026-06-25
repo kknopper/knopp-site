@@ -13,6 +13,9 @@ yarn-error.log*
 pnpm-debug.log*
 
 
+# local npm config (overrides corporate settings)
+.npmrc
+
 # environment variables
 .env
 .env.production

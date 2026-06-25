@@ -1,0 +1,483 @@
+---
+import { Icon } from 'astro-icon/components';
+import NavLinks from './NavLinks.astro';
+
+interface Props {
+  heroH1?: string;
+  heroH2?: string;
+}
+
+const { heroH1, heroH2 } = Astro.props;
+---
+
+<div class="wrapper">
+  <header role="navigation" class="header theme-color-bg">
+    <a href="/" class="site-logo" aria-label="Kevin Knopp — Home">
+      <img class="theme-color-bg" src="/images/logo.svg" alt="K2 logo" />
+    </a>
+    <nav class="container">
+      <ul class="nav navbar navbar-right">
+        <NavLinks showActive showIcons />
+        <li class="nav-search">
+          <button class="nav-search-btn" data-search-open aria-label="Search">
+            <Icon name="fa6-solid:magnifying-glass" width={16} height={16} aria-hidden="true" />
+          </button>
+        </li>
+        <li class="nav-trigger">
+          <button class="nav-trigger-btn" aria-label="Toggle navigation" aria-expanded="false">
+            <img src="/images/nav-plus-white.png" alt="" aria-hidden="true" class="nav-trigger-img" />
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<div class="hero">
+  <div class="hero-wrap container">
+    <div class="hero-text">
+      {heroH1 && <h1>{heroH1}</h1>}
+      {heroH2 && <h2 set:html={heroH2} />}
+    </div>
+  </div>
+</div>
+
+<style>
+  .wrapper {
+    position: relative;
+  }
+
+  .header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    color: white;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+    margin-bottom: -75px;
+    z-index: 1;
+    transition: all 0.2s ease-in-out;
+
+    &.active .nav-trigger-img {
+      transform: rotate(45deg);
+    }
+
+    &.active .navbar {
+      max-height: 415px;
+      transition-delay: 0s;
+
+      @media (min-width: 40em) {
+        max-height: 75px;
+      }
+    }
+
+    &.active .navbar :global(li) {
+      opacity: 1;
+      transition-delay: 0.2s;
+    }
+
+    a {
+      color: white;
+      display: block;
+      font-family: var(--font-primary);
+      letter-spacing: 1px;
+    }
+
+    li {
+      display: block;
+      text-decoration: none;
+
+      @media (min-width: 40em) {
+        display: inline-block;
+      }
+    }
+  }
+
+  nav.container {
+    width: 100%;
+    max-width: none;
+
+    @media (min-width: 40em) {
+      width: var(--container-width);
+      max-width: var(--container-max-width);
+    }
+  }
+
+  .navbar {
+    height: 415px;
+    align-items: center;
+    margin: 0 auto;
+    display: block;
+    max-height: 0;
+    transition: all 0.2s;
+    overflow: hidden;
+    transition-delay: 0.3s;
+    list-style: none;
+    padding: 0;
+
+    @media (min-width: 40em) {
+      height: 75px;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 55px;
+      overflow: hidden;
+    }
+
+    :global(li) {
+      align-self: center;
+      text-align: center;
+      padding: 23px 0;
+      opacity: 0;
+      transition: all 0.2s;
+      transition-delay: 0s;
+
+      @media (min-width: 40em) {
+        width: auto;
+        text-align: left;
+        padding: 0 15px;
+      }
+    }
+
+    :global(li):first-child {
+      display: none;
+
+      @media (min-width: 40em) {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    :global(li):nth-child(2) {
+      margin-top: 63px;
+
+      @media (min-width: 40em) {
+        margin-top: 0;
+      }
+    }
+
+    :global(li.active) {
+      border-radius: 5em;
+
+      @media (min-width: 40em) {
+        background-color: white;
+      }
+    }
+
+    :global(li.active) a {
+      display: inline-block;
+      background: white;
+      padding: 0 15px;
+      border-radius: 5em;
+      color: var(--theme-color);
+
+      @media (min-width: 40em) {
+        padding: 5px 0;
+        background-color: inherit;
+      }
+    }
+
+    .nav-trigger {
+      width: auto;
+      max-height: 50px;
+      position: absolute;
+      right: 6%;
+      top: 12.5px;
+      padding: 0;
+      margin: 0;
+      opacity: 1;
+    }
+
+    .nav-search {
+      position: absolute;
+      right: calc(6% + 40px);
+      top: 12.5px;
+      padding: 0;
+      margin: 0;
+
+      @media (min-width: 40em) {
+        position: static;
+        top: auto;
+        right: auto;
+      }
+    }
+  }
+
+  .nav-search-btn {
+    background: none;
+    border: none;
+    padding: 12.5px 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: white;
+
+    :global(svg) {
+      fill: white;
+      display: block;
+    }
+  }
+
+  .nav-trigger-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-trigger-img {
+    max-width: 25px;
+    padding: 12.5px 0;
+    transition: transform 0.2s;
+  }
+
+  .site-logo {
+    display: block;
+    position: absolute;
+    top: 12.5px;
+    left: 25px;
+    width: 50px;
+    height: 50px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  /* Hero */
+  .hero {
+    height: 415px;
+    width: 100%;
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('/images/hero-640.jpg') center / cover no-repeat;
+
+    @media (min-width: 30em) {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/images/hero-960.jpg') center / cover no-repeat;
+    }
+
+    @media (min-width: 40em) {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/images/hero-960.jpg') 0 -55px / cover no-repeat;
+    }
+
+    @media (min-width: 60em) {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/images/hero-960.jpg') 0 -150px / cover no-repeat;
+    }
+
+    @media (min-width: 80em) {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/images/hero-2000.jpg') 0 35% / cover no-repeat;
+    }
+
+    @media (min-width: 100em) {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/images/hero-2000.jpg') 0 40% / cover no-repeat;
+    }
+
+    @media (min-width: 125em) {
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('/images/hero-max.jpg') 0 50% / cover no-repeat;
+    }
+  }
+
+  .hero-wrap {
+    position: relative;
+    height: 100%;
+  }
+
+  .hero-text {
+    font-family: var(--font-heading);
+    color: white;
+    text-align: center;
+    padding-top: 95px;
+
+    h1 {
+      letter-spacing: 1.5px;
+      margin-bottom: 0;
+
+      @media (min-width: 40em) {
+        font-size: 3em;
+      }
+    }
+
+    h2 {
+      font-family: var(--font-primary);
+      letter-spacing: 0.5px;
+    }
+
+    :global(.des-text) {
+      font-family: var(--font-decorative);
+      font-size: 1.65rem;
+      letter-spacing: 0.75px;
+    }
+
+    :global(.des-svg) {
+      display: inline-block;
+      height: 2.5rem;
+      width: auto;
+      vertical-align: -0.85rem;
+      overflow: visible;
+    }
+
+    :global(.des-svg path) {
+      vector-effect: non-scaling-stroke;
+    }
+
+    :global(.dev-text) {
+      font-family: var(--font-mono);
+      font-size: 1.75rem;
+      letter-spacing: 0;
+    }
+  }
+</style>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+
+  function init() {
+    const header = document.querySelector('.header') as HTMLElement | null;
+    const trigger = document.querySelector('.nav-trigger-btn') as HTMLButtonElement | null;
+    const navbar = document.querySelector('.navbar') as HTMLElement | null;
+
+    trigger?.addEventListener('click', () => {
+      header?.classList.toggle('active');
+      const expanded = header?.classList.contains('active') ?? false;
+      trigger.setAttribute('aria-expanded', String(expanded));
+    });
+
+    // Intercept nav link clicks — close the nav first, then navigate after the animation
+    navbar?.addEventListener('click', (e) => {
+      const link = (e.target as HTMLElement).closest('a[href]') as HTMLAnchorElement | null;
+      if (!link || !header?.classList.contains('active')) return;
+
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('http') || href.startsWith('mailto:')) return;
+
+      e.preventDefault();
+
+      // Close the nav
+      header.classList.remove('active');
+      trigger?.setAttribute('aria-expanded', 'false');
+
+      // Navigate after close animation (slightly trimmed from full 600ms)
+      setTimeout(() => {
+        navigate(href);
+      }, 400);
+    });
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>
+
+<script>
+  import { animate, createTimeline, stagger } from 'animejs';
+  import { createDrawable } from 'animejs/svg';
+  import { scrambleText } from 'animejs/text';
+  import { DESIGN_VIEWBOX, DESIGN_LETTER_PATHS } from '../data/design-svg-path';
+
+  function lockWidth(el: HTMLElement) {
+    el.style.display = 'inline-block';
+    el.style.width = `${el.offsetWidth}px`;
+  }
+
+  function initHeroAnimations() {
+    const desText = document.querySelector('.hero-text .des-text') as HTMLElement | null;
+    const devText = document.querySelector('.hero-text .dev-text') as HTMLElement | null;
+
+    if (!desText || !devText) return;
+    if (desText.dataset.animated) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    desText.dataset.animated = 'true';
+
+    // Build SVG for "design" — one <path> per letter
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', DESIGN_VIEWBOX);
+    svg.setAttribute('aria-label', 'design');
+    svg.setAttribute('role', 'img');
+    svg.classList.add('des-svg');
+
+    DESIGN_LETTER_PATHS.forEach((d) => {
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('fill', 'var(--theme-color)');
+      path.setAttribute('fill-opacity', '0');
+      path.setAttribute('stroke', 'var(--theme-color)');
+      path.setAttribute('stroke-width', '0.75');
+      path.setAttribute('stroke-linecap', 'round');
+      path.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(path);
+    });
+
+    // Lock width before swapping text for SVG
+    lockWidth(desText);
+    desText.textContent = '';
+    desText.appendChild(svg);
+
+    // Create drawable proxies for each letter path
+    const drawables = createDrawable('.des-svg path', 0, 0);
+
+    // Lock width before clearing so layout doesn't shift during scramble
+    const devOriginal = devText.textContent || 'develop';
+    lockWidth(devText);
+    devText.textContent = '';
+
+    // Timeline
+    const letterCount = DESIGN_LETTER_PATHS.length;
+    const drawStagger = 150;
+    const drawDuration = 800;
+
+    // SVG fully done = last letter stagger + draw duration
+    const svgEnd = (letterCount) * drawStagger + drawDuration;
+
+    const tl = createTimeline({ defaults: { ease: 'inOutQuad' } });
+
+    // Stroke draw + fill together — each letter fills as it draws
+    tl.add(drawables, {
+      draw: '0 1',
+      duration: drawDuration,
+      ease: 'inOutQuad',
+      delay: stagger(drawStagger),
+    }, 0);
+
+    tl.add('.des-svg path', {
+      fillOpacity: [0, 1],
+      duration: drawDuration,
+      ease: 'inOutQuad',
+      delay: stagger(drawStagger),
+    }, 0);
+
+    // Scramble reveal "develop" — starts with design, finishes after SVG
+    const scrambleDuration = svgEnd + 200;
+    tl.add(devText, {
+      textContent: scrambleText({
+        text: devOriginal,
+        chars: 'lowercase',
+        from: 'left',
+        cursor: '',
+        override: '',
+        duration: scrambleDuration,
+        settleDuration: 500,
+      }),
+      duration: scrambleDuration,
+      ease: 'linear',
+    }, 0);
+  }
+
+  document.addEventListener('astro:page-load', initHeroAnimations);
+</script>

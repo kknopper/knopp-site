@@ -1,0 +1,166 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import Tag from '../components/Tag.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, tags } = Astro.props;
+---
+
+<BaseLayout title={title} description={description ?? ''} heroH1="KSQUARED" heroH2="A collection of thoughts on tech, life &amp; code">
+  <section class="blog-article-container container">
+    <div class="row">
+      <article class="blog-article grid-two-thirds" data-pagefind-body>
+        <div class="blog-header">
+          <div class="blog-heading">
+            <h3 class="blog-title">{title}</h3>
+            <h4 class="blog-list-date">
+              {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </h4>
+          </div>
+          {updatedDate && (
+            <p class="last-updated">
+              Updated {updatedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
+          )}
+          {tags && tags.length > 0 && (
+            <ul class="post-tags">
+              {tags.map((tag) => <Tag tag={tag} />)}
+            </ul>
+          )}
+          <hr />
+        </div>
+        <div class="prose">
+          <slot />
+        </div>
+        <div class="prev-next">
+          <a href="/blog" class="blog-button theme-color-bg left">
+            <i class="fa fa-arrow-left"></i> All Posts
+          </a>
+        </div>
+      </article>
+
+      <aside class="sidebar grid-third">
+        <div class="sidebar-section">
+          <h4>About</h4>
+          <hr />
+          <p>Thoughts on design, development, and everything in between.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-article-container {
+    padding-bottom: 3rem;
+  }
+
+  .blog-header {
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-heading {
+    display: flex;
+    align-items: baseline;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    @media (min-width: 45em) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .blog-title {
+    font-size: 1.5rem;
+    margin: 0;
+
+    @media (min-width: 60em) {
+      font-size: 2.25rem;
+    }
+  }
+
+  .blog-list-date {
+    font-size: 1.125rem;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    color: var(--color-black);
+    margin: 0;
+  }
+
+  .last-updated {
+    font-size: 0.875rem;
+    color: var(--color-gray-dark);
+    font-style: italic;
+    margin: 0.25rem 0 0;
+  }
+
+  .post-tags {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .prose {
+    line-height: 1.7;
+
+    :global(h2),
+    :global(h3),
+    :global(h4) {
+      margin-top: 2rem;
+    }
+
+    :global(pre) {
+      background: var(--color-black);
+      color: white;
+      padding: 1.25em;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    :global(img) {
+      max-width: 100%;
+      border-radius: 4px;
+    }
+  }
+
+  .prev-next {
+    text-align: center;
+    margin: 3rem 0 1rem;
+  }
+
+  .blog-button {
+    font-size: 0.75rem;
+    min-width: 125px;
+    max-width: 250px;
+    margin: 0 5px;
+    display: inline-block;
+    color: white;
+    padding: 5px 1rem;
+    border-radius: 5px;
+    position: relative;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    padding-top: 1rem;
+  }
+
+  .sidebar-section {
+    margin-bottom: 2rem;
+
+    h4 {
+      margin-bottom: 0.25rem;
+    }
+
+    hr {
+      margin-bottom: 0.75rem;
+      height: 2px;
+    }
+  }
+</style>

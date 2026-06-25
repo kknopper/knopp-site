@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPostItem from '../../components/BlogPostItem.astro';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags ?? []))];
+
+  return allTags.map((tag) => {
+    const filteredPosts = allPosts
+      .filter((post) => post.data.tags?.includes(tag))
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout
+  title={`#${tag}`}
+  description={`Posts tagged with ${tag}`}
+  heroH1="KSQUARED"
+  heroH2="A collection of thoughts on tech, life &amp; code"
+>
+  <section class="blog-container container" data-pagefind-ignore="all">
+    <div class="row">
+      <div class="blog-list grid-two-thirds">
+        <div class="tag-heading">
+          <h3 class="theme-color">#{tag}</h3>
+          <span class="tag-count">{posts.length} post{posts.length !== 1 ? 's' : ''}</span>
+        </div>
+        <hr />
+
+        {posts.map((post) => (
+          <BlogPostItem post={post} />
+        ))}
+      </div>
+
+      <aside class="sidebar grid-third">
+        <div class="sidebar-section">
+          <h4>About</h4>
+          <hr />
+          <p>Thoughts on design, development, and everything in between.</p>
+        </div>
+        <div class="sidebar-section">
+          <h4><a href="/tags" class="theme-color">All Tags &rarr;</a></h4>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .blog-container {
+    padding-bottom: 3rem;
+  }
+
+  .tag-heading {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.25rem;
+
+    h3 {
+      margin: 0;
+      font-size: 2.25rem;
+    }
+  }
+
+  .tag-count {
+    font-size: 0.875rem;
+    color: var(--color-gray-dark);
+  }
+
+  .sidebar {
+    padding-top: 1rem;
+  }
+
+  .sidebar-section {
+    margin-bottom: 2rem;
+
+    h4 {
+      margin-bottom: 0.25rem;
+    }
+
+    hr {
+      margin-bottom: 0.75rem;
+      height: 2px;
+    }
+  }
+</style>

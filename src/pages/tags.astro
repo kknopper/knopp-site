@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+import Search from 'astro-pagefind/components/Search.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Tag from '../components/Tag.astro';
+
+const allPosts = await getCollection('blog');
+
+// Count how many posts each tag appears in
+const tagCounts: Record<string, number> = {};
+for (const post of allPosts) {
+  for (const tag of post.data.tags ?? []) {
+    tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
+  }
+}
+
+// Sort tags by post count, highest first
+const tags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout
+  title="Tags & Search"
+  description="Browse posts by tag or search the blog"
+  heroH1="KSQUARED"
+  heroH2="A collection of thoughts on tech, life &amp; code"
+>
+  <section class="tags-container container" data-pagefind-ignore="all">
+    <div class="row">
+      <div class="grid-two-thirds">
+        <h3 class="theme-color">Tags</h3>
+        <hr class="theme-color-bg" />
+        <ul class="tag-list">
+          {tags.map(([tag, count]) => <Tag tag={tag} count={count} />)}
+        </ul>
+
+        <h3 class="theme-color search-heading">Search</h3>
+        <hr class="theme-color-bg" />
+        <div class="search-wrap">
+          <Search />
+        </div>
+      </div>
+
+      <aside class="sidebar grid-third">
+        <div class="sidebar-section">
+          <h4>About</h4>
+          <hr />
+          <p>Thoughts on design, development, and everything in between.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .tags-container {
+    padding-bottom: 3rem;
+  }
+
+  .tag-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .search-heading {
+    margin-top: 0.5rem;
+  }
+
+  .search-wrap {
+    margin-top: 1rem;
+
+    /* Pagefind UI theming */
+    :global(.pagefind-ui) {
+      --pagefind-ui-primary: var(--color-primary);
+      --pagefind-ui-text: var(--color-black);
+      --pagefind-ui-background: #ffffff;
+      --pagefind-ui-border: var(--color-gray-light);
+      --pagefind-ui-tag: var(--color-primary);
+      --pagefind-ui-border-width: 2px;
+      --pagefind-ui-border-radius: 0.25em;
+      --pagefind-ui-font: var(--font-primary);
+    }
+  }
+
+  .sidebar {
+    padding-top: 1rem;
+  }
+
+  .sidebar-section {
+    margin-bottom: 2rem;
+
+    h4 {
+      margin-bottom: 0.25rem;
+    }
+
+    hr {
+      margin-bottom: 0.75rem;
+      height: 2px;
+    }
+  }
+</style>

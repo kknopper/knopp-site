@@ -1,0 +1,35 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  showActive?: boolean;
+  showIcons?: boolean;
+}
+
+const { showActive = false, showIcons = false } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/',          label: 'Home',      icon: true },
+  { href: '/about',     label: 'About' },
+  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/blog',      label: 'Blog' },
+];
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+{navLinks.map((link) => (
+  <li class={showActive && isActive(link.href) ? 'active' : ''}>
+    {showIcons && link.icon
+      ? <a href={link.href} class={showActive && isActive(link.href) ? 'theme-color' : ''} aria-label="Home">
+          <Icon name="fa6-solid:house" width={14} height={14} aria-hidden="true" />
+        </a>
+      : <a href={link.href} class={showActive && isActive(link.href) ? 'theme-color' : ''}>{link.label}</a>
+    }
+  </li>
+))}

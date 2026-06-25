@@ -1,0 +1,139 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Search from 'astro-pagefind/components/Search.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+  title: string;
+  description?: string;
+  heroH1?: string;
+  heroH2?: string;
+}
+
+const { title, description = '', heroH1, heroH2 } = Astro.props;
+
+// Holiday theming — class applied to <html> for CSS overrides and JS easter eggs
+const now = new Date();
+const month = now.getMonth() + 1;
+const day = now.getDate();
+
+let holiday = '';
+if (month === 3 && day === 17)  holiday = 'st-pattys';
+else if (month === 4 && day === 1)  holiday = 'easter';
+else if (month === 5 && day === 5)  holiday = 'cinco-de-mayo';
+else if (month === 10 && day === 31) holiday = 'halloween';
+else if (month === 11 && day === 23) holiday = 'thanksgiving';
+else if (month === 12 && day === 25) holiday = 'christmas';
+---
+
+<!doctype html>
+<html lang="en" class={holiday}>
+  <head>
+    <BaseHead title={title} description={description} />
+    <ClientRouter />
+  </head>
+  <body>
+    <Header heroH1={heroH1} heroH2={heroH2} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <dialog data-search-modal>
+      <Search />
+    </dialog>
+  </body>
+</html>
+
+<script>
+  // Konami code — toggles .konami on <body> which flips --theme-color vars
+  const sequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+  let count = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.keyCode === sequence[count]) {
+      count++;
+    } else {
+      count = e.keyCode === sequence[0] ? 1 : 0;
+    }
+
+    if (count === sequence.length) {
+      count = 0;
+      const themed = document.querySelectorAll(
+        '.theme-color, .theme-color-secondary, .theme-color-bg, .theme-color-bg-secondary'
+      );
+      themed.forEach((el) => el.classList.add('transition'));
+      document.body.classList.toggle('konami');
+      setTimeout(() => {
+        themed.forEach((el) => el.classList.remove('transition'));
+      }, 2000);
+    }
+  });
+</script>
+
+<script>
+  // Search modal — any [data-search-open] button opens the shared dialog
+  function init() {
+    const modal = document.querySelector('[data-search-modal]') as HTMLDialogElement | null;
+    const openBtns = document.querySelectorAll('[data-search-open]');
+
+    openBtns.forEach((btn) => {
+      btn.addEventListener('click', () => modal?.showModal());
+    });
+
+    // Click outside the dialog box to close
+    modal?.addEventListener('click', (e) => {
+      const box = modal.getBoundingClientRect();
+      if (
+        (e as MouseEvent).clientX < box.left ||
+        (e as MouseEvent).clientX > box.right ||
+        (e as MouseEvent).clientY < box.top ||
+        (e as MouseEvent).clientY > box.bottom
+      ) {
+        modal.close();
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>
+
+<style is:global>
+  dialog[data-search-modal] {
+    background: white;
+    border: none;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 640px;
+    height: fit-content;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    overflow: visible;
+    margin: 8vh auto;
+    --pf-searchbox-dropdown-max-height: none;
+    --pf-searchbox-max-width: none;
+    --pf-border: var(--theme-color);
+    --pf-border-focus: var(--theme-color);
+    --pf-outline-focus: var(--theme-color);
+
+    &::backdrop {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Pagefind UI theming */
+    .pagefind-ui {
+      --pagefind-ui-primary: var(--color-primary);
+      --pagefind-ui-text: var(--color-black);
+      --pagefind-ui-background: #ffffff;
+      --pagefind-ui-border: var(--color-gray-light);
+      --pagefind-ui-tag: var(--color-primary);
+      --pagefind-ui-border-width: 2px;
+      --pagefind-ui-border-radius: 0.25em;
+      --pagefind-ui-font: var(--font-primary);
+      --pf-border: var(--theme-color);
+      --pf-border-focus: var(--theme-color);
+    }
+  }
+</style>

@@ -1,0 +1,152 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('portfolio');
+  return items.map((item) => ({
+    params: { slug: item.id },
+    props: { item },
+  }));
+}
+
+interface Props {
+  item: CollectionEntry<'portfolio'>;
+}
+
+const { item } = Astro.props;
+const { title, description, image, imageAlt, link, thumb, thumbAlt } = item.data;
+---
+
+<BaseLayout title={title} description={description} heroH1="Portfolio" heroH2={title}>
+  <section class="portfolio-detail">
+
+    <div class="portfolio-detail-logo-wrap theme-color-bg-secondary">
+      <img src={thumb} alt={thumbAlt ?? title} class="portfolio-detail-logo" />
+    </div>
+
+    <div class="portfolio-detail-body container">
+      <div class="portfolio-detail-content" data-animate>
+        {image && (
+          <img
+            src={image}
+            alt={imageAlt ?? title}
+            class="portfolio-detail-mockup"
+          />
+        )}
+        <h2 class="portfolio-detail-title theme-color">{title}</h2>
+        <hr class="theme-color-bg" />
+        <p class="portfolio-detail-desc">{description}</p>
+        <div class="portfolio-detail-actions">
+          <a href="/portfolio" class="button theme-color-bg-secondary">
+            &larr; All Work
+          </a>
+          <a href={link} target="_blank" rel="noopener" class="button theme-color-bg">
+            View Site &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</BaseLayout>
+
+<style>
+  .portfolio-detail {
+    padding-bottom: 3rem;
+    padding-top: 0;
+  }
+
+  /* Logo hero */
+  .portfolio-detail-logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 220px;
+    padding: 2.5rem 0;
+
+    @media (min-width: 40em) {
+      min-height: 300px;
+    }
+  }
+
+  .portfolio-detail-logo {
+    max-width: 200px;
+    width: 50%;
+    height: auto;
+
+    @media (min-width: 40em) {
+      max-width: 280px;
+    }
+  }
+
+  /* Content column — centered on page, text left-aligned */
+  .portfolio-detail-body {
+    padding-top: 2rem;
+  }
+
+  .portfolio-detail-content {
+    max-width: 720px;
+    margin: 0 auto;
+
+    hr {
+      margin-bottom: 1rem;
+    }
+  }
+
+  /* Mockup screenshot */
+  .portfolio-detail-mockup {
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+  }
+
+  .portfolio-detail-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+
+    @media (min-width: 40em) {
+      font-size: 2.5rem;
+    }
+  }
+
+  .portfolio-detail-desc {
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .portfolio-detail-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+</style>
+
+<script>
+  import { animate, stagger } from 'animejs';
+
+  function revealContent() {
+    const content = document.querySelector<HTMLElement>('[data-animate]');
+    if (!content) return;
+
+    content.querySelectorAll<HTMLElement>(':scope > *').forEach((el) => {
+      el.style.opacity = '0';
+    });
+
+    animate('[data-animate] > *', {
+      opacity: [0, 1],
+      translateY: [20, 0],
+      duration: 480,
+      delay: stagger(70),
+      easing: 'easeOutCubic',
+    });
+  }
+
+  document.addEventListener('astro:page-load', revealContent);
+</script>
