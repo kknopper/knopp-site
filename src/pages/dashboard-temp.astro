@@ -1,0 +1,316 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
+
+const portfolioItems = (await getCollection('portfolio'))
+  .sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0))
+  .slice(0, 5);
+
+const dayOfMonth = (d: Date) => String(d.getDate()).padStart(2, '0');
+const monthAbbr = (d: Date) => d.toLocaleDateString('en-US', { month: 'short' }).toLowerCase();
+
+// Placeholder content for the proposed /now, /uses, /trinkets pages
+const nowPreview = [
+  { label: 'Working on', value: 'Redesigning this site' },
+  { label: 'Listening to', value: '—' },
+  { label: 'Reading', value: '—' },
+];
+
+const usesPreview = [
+  { label: 'Editor', value: '—' },
+  { label: 'Machine', value: '—' },
+  { label: 'Terminal', value: '—' },
+];
+
+const trinketsPreview = [
+  { label: 'Find', value: 'A favorite mechanical keyboard, gadget, etc.' },
+  { label: 'Find', value: 'A favorite tool/app' },
+  { label: 'Find', value: 'A favorite physical object' },
+];
+---
+
+<BaseLayout
+  title="Dashboard (temp)"
+  description="Redesign playground — titlebox/entryitem layout, not linked anywhere"
+  heroH1="Kevin Knopp"
+  heroH2="Dashboard-style homepage concept, inspired by rknight.me"
+>
+  <section class="playground container">
+    <p class="playground-note">
+      🚧 temp playground page — <code>/dashboard-temp</code>, not linked in nav.
+    </p>
+
+    <div class="grid-2">
+      <div class="titlebox">
+        <h2 class="titlebox__name theme-color-bg">posts</h2>
+        {posts.map((post) => (
+          <a href={`/blog/${post.id}/`} class="post-card">
+            <span class="post-card-num theme-color">
+              {dayOfMonth(post.data.pubDate)}
+              <span class="post-card-month">{monthAbbr(post.data.pubDate)}</span>
+            </span>
+            <span class="post-card-text">
+              <span class="post-card-title">{post.data.title}</span>
+              {post.data.description && <span class="post-card-desc">{post.data.description}</span>}
+            </span>
+          </a>
+        ))}
+        <a class="titlebox__link theme-color-bg" href="/blog">All Posts &rarr;</a>
+      </div>
+
+      <div class="titlebox">
+        <h2 class="titlebox__name theme-color-bg-secondary">work</h2>
+        {portfolioItems.map((item) => (
+          <div class="entryitem">
+            <div class="entryitem--data">
+              <a href={item.data.link} target="_blank" rel="noopener noreferrer">{item.data.title}</a>
+              <hr />
+              <span class="entryitem--date">{item.data.date ? item.data.date.getFullYear() : ''}</span>
+            </div>
+          </div>
+        ))}
+        <a class="titlebox__link theme-color-bg-secondary" href="/portfolio">All Work &rarr;</a>
+      </div>
+    </div>
+
+    <div class="titlebox">
+      <h2 class="titlebox__name theme-color-bg-tertiary">now <span class="proposed-tag">proposed</span></h2>
+      <ul class="kv-list">
+        {nowPreview.map((row) => (
+          <li><span class="kv-label">{row.label}</span><span class="kv-value">{row.value}</span></li>
+        ))}
+      </ul>
+      <a class="titlebox__link theme-color-bg-tertiary" href="#">/now &rarr;</a>
+    </div>
+
+    <div class="grid-2">
+      <div class="titlebox">
+        <h2 class="titlebox__name theme-color-bg">uses <span class="proposed-tag">proposed</span></h2>
+        <ul class="kv-list">
+          {usesPreview.map((row) => (
+            <li><span class="kv-label">{row.label}</span><span class="kv-value">{row.value}</span></li>
+          ))}
+        </ul>
+        <a class="titlebox__link theme-color-bg" href="#">/uses &rarr;</a>
+      </div>
+
+      <div class="titlebox">
+        <h2 class="titlebox__name theme-color-bg-secondary">trinkets <span class="proposed-tag">proposed</span></h2>
+        <ul class="kv-list">
+          {trinketsPreview.map((row) => (
+            <li><span class="kv-label">{row.label}</span><span class="kv-value">{row.value}</span></li>
+          ))}
+        </ul>
+        <a class="titlebox__link theme-color-bg-secondary" href="#">/trinkets &rarr;</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .playground {
+    padding-bottom: 4rem;
+  }
+
+  .playground-note {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-gray-dark);
+    border: 1px dashed var(--color-gray-light);
+    padding: 0.5em 0.75em;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 2rem;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0 1.5rem;
+
+    @media (min-width: 45em) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* --- Titlebox: bordered card with floating label + link on the border --- */
+  .titlebox {
+    position: relative;
+    border: 2px solid var(--color-gray-light);
+    border-radius: 8px;
+    padding: 1.5em 1.25em 1.75em;
+    margin: 2.5em 0 0;
+  }
+
+  .titlebox__name {
+    position: absolute;
+    top: -0.9em;
+    left: 0.75em;
+    margin: 0;
+    font-size: 0.85em;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    color: var(--color-white);
+    padding: 0.15em 0.6em;
+    border-radius: 4px;
+    width: fit-content;
+  }
+
+  .proposed-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7em;
+    opacity: 0.75;
+    text-transform: uppercase;
+    margin-left: 0.4em;
+  }
+
+  .titlebox__link {
+    position: absolute;
+    right: 1em;
+    bottom: -0.75em;
+    padding: 0.1em 0.6em;
+    border-radius: 4px;
+    color: var(--color-white);
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+  }
+
+  .titlebox__link:hover {
+    opacity: 0.85;
+  }
+
+  /* --- Entry item: title ... dashed leader ... date --- */
+  .entryitem {
+    margin-bottom: 0.6em;
+  }
+
+  .entryitem--data {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-column-gap: 10px;
+    align-items: center;
+  }
+
+  .entryitem--data a {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: var(--color-black);
+
+    &:hover {
+      color: var(--theme-color);
+    }
+  }
+
+  .entryitem--data hr {
+    width: 100%;
+    margin: 0;
+    border: none;
+    border-top: 1px dashed var(--color-gray-light);
+    background: none;
+    height: 0;
+  }
+
+  .entryitem--date {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    color: var(--color-gray-dark);
+    white-space: nowrap;
+  }
+
+  /* --- Post card: date numeral + title/desc, à la hero concept 2 --- */
+  .post-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.6em 0;
+    border-bottom: 1px dashed var(--color-gray-light);
+    color: var(--color-black);
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    &:hover .post-card-title {
+      color: var(--theme-color);
+    }
+  }
+
+  .post-card-num {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    line-height: 1;
+    opacity: 0.35;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 2.5em;
+  }
+
+  .post-card-month {
+    font-family: var(--font-mono);
+    font-size: 0.45em;
+    text-transform: lowercase;
+    opacity: 1;
+    letter-spacing: 0.5px;
+  }
+
+  .post-card-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .post-card-title {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .post-card-desc {
+    font-size: 0.8rem;
+    color: var(--color-gray-dark);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* --- Key/value list for now / uses / trinkets previews --- */
+  .kv-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.4em 0;
+      border-bottom: 1px dashed var(--color-gray-light);
+      font-size: 0.9rem;
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .kv-label {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    color: var(--color-gray-dark);
+    flex-shrink: 0;
+  }
+
+  .kv-value {
+    text-align: right;
+  }
+</style>

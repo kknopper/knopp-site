@@ -1,0 +1,103 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const examples = [
+  { eyebrow: 'about', title: 'About Me', sub: 'Front-end developer, design nerd, chess enthusiast' },
+  { eyebrow: 'blog', title: 'Writing', sub: 'Notes on design, code, and whatever else is on my mind' },
+  { eyebrow: 'portfolio', title: 'Selected Work', sub: 'A small showcase of some of my work' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Hero concept (temp)" description="Hero redesign playground for inner pages" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section class="container playground">
+        <p class="playground-note">
+          🚧 temp playground page — <code>/hero-temp</code>, not linked in nav. Settled on the dark band + accent border concept for inner-page heroes; shown below across a few different page types to check it holds up. The photo hero stays on the homepage.
+        </p>
+
+        {examples.map((ex) => (
+          <>
+            <p class="concept-label">{ex.eyebrow} page</p>
+            <div class="hero-c1">
+              <div class="hero-c1-inner container">
+                <span class="hero-c1-eyebrow">{ex.eyebrow}</span>
+                <h1 class="hero-c1-title">{ex.title}</h1>
+                <p class="hero-c1-sub">{ex.sub}</p>
+              </div>
+            </div>
+          </>
+        ))}
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .playground {
+    padding-top: 6.5rem;
+    padding-bottom: 4rem;
+  }
+
+  .playground-note {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-gray-dark);
+    border: 1px dashed var(--color-gray-light);
+    padding: 0.75em 1em;
+    border-radius: 4px;
+    margin-bottom: 2.5rem;
+  }
+
+  .concept-label {
+    font-family: var(--font-mono);
+    text-transform: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-gray-dark);
+    margin: 2.5rem 0 1rem;
+  }
+
+  /* === Dark band, left accent border === */
+  .hero-c1 {
+    background-color: var(--color-black);
+    border-left: 6px solid var(--theme-color);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .hero-c1-inner {
+    padding: 2.5rem 2rem;
+  }
+
+  .hero-c1-eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: lowercase;
+    color: var(--theme-color);
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-c1-title {
+    color: var(--color-white);
+    text-transform: none;
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-c1-sub {
+    color: var(--color-gray-light);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+</style>
